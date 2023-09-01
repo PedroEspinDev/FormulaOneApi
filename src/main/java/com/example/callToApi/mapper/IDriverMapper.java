@@ -3,19 +3,18 @@ package com.example.callToApi.mapper;
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
 import org.mapstruct.Mapper;
+import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper(componentModel = "spring")
+@Mapper
 public interface IDriverMapper {
 
-    Driver entityToDto(Driver entity);
+    Driver toDto(Driver entity);
 
-    Driver DtoToEntity(DriverDto dto);
+    Driver toEntity(DriverDto dto);
 
-    List<Driver> dtoToEntityList(List<DriverDto> dto);
+    List<Driver> toEntityList(List<DriverDto> dto);
 
-    List<DriverDto> entityToDtoList(List<Driver> entity);
-
-
+    IDriverMapper INSTANCE = Mappers.getMapper(IDriverMapper.class);
 }

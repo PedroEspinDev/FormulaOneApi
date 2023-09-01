@@ -39,7 +39,6 @@ public class DriverService {
 
         //Objeto que nos permite construir la URL con los parámetros que necesitamos
         HttpEntity<?> entity = new HttpEntity<>(headers);
-
         /*
         1.Generamos una variable 'response' que contendrá la lista de pilotos.
         2.Usamos el restTemplate.exchange para una solicitud HTTP GET a la URL 'F1_API_URL'.
