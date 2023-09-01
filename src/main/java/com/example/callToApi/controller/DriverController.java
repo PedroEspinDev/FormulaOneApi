@@ -1,5 +1,6 @@
 package com.example.callToApi.controller;
 
+import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
 import com.example.callToApi.mapper.DriverMapper;
 import com.example.callToApi.repository.IDriverRepository;
@@ -21,29 +22,17 @@ public class DriverController {
     private DriverService driverService;
     @Autowired
     private DriverMapper driverMapper;
-    @Autowired
-    private IDriverRepository driverRepository;
     /*
       1. Crear un endpoint que devuelva todos los drivers de la base de datos.
         en caso de no encontrarlos por estar vacía, buscará en la API externa
         y los guardará en la base de datos.
+    */
+    @PostMapping("/info")
+    public ResponseEntity <?> getDrivers() {
+        List<Driver> drivers = driverService.getAndSaveDrivers();
 
-
-    @GetMapping("/drivers")
-    public ResponseEntity<String> getDriverJson(@PathVariable Integer id) {
-        Optional<Driver> driverOptional = driverRepository.findById(id);
-        if (driverOptional.isPresent()) {
-            try {
-                Driver diver = driverOptional.get();
-                String driverJson = driverMapper.DriverToJSON(driverOptional.get());
-                return ResponseEntity.ok(driverJson);
-            } catch (JsonProcessingException e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error to convert to JSON");
-            }
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }*/
+        return ResponseEntity.ok("Drivers saved");
+    }
 }
 
 
