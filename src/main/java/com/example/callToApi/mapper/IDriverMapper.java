@@ -7,9 +7,9 @@ import org.mapstruct.factory.Mappers;
 
 import java.util.List;
 
-@Mapper
-public interface IDriverMapper {
 
+public interface IDriverMapper {
+/*
     Driver toDto(Driver entity);
 
     Driver toEntity(DriverDto dto);
@@ -17,4 +17,6 @@ public interface IDriverMapper {
     List<Driver> toEntityList(List<DriverDto> dto);
 
     IDriverMapper INSTANCE = Mappers.getMapper(IDriverMapper.class);
+
+ */
 }

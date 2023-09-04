@@ -9,9 +9,7 @@ import lombok.Setter;
 
 public class DriverDto extends Driver {
 
-    private Integer id;
     private String name;
-    private Integer age;
     private String nacionality;
 
 }
