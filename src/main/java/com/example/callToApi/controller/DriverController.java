@@ -19,11 +19,11 @@ public class DriverController {
     private final IDriverRepository driverRepository;
 
     /*
-      1. Crear un endpoint que devuelva todos los drivers de la base de datos.
+      1. Crear un endpoint que devuelva los pilotos de la base de datos buscados por nombre,
         en caso de no encontrarlos por estar vacía, buscará en la API externa
-        y los guardará en la base de datos.
+        y los guardará en nuestra la base de datos.
     */
-    @GetMapping("/getinfo/{name}")
+    @GetMapping("/driver/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Driver>> getDriversInfo(@PathVariable String name) {
 
