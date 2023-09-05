@@ -30,6 +30,15 @@ public class DriverService {
         }
         return matchingDrivers;
     }
+    public List<Driver> getAllDrivers() {
+        List<Driver> findListDrivers = driverRepository.findAll();
+        if (findListDrivers.isEmpty()) {
+            findListDrivers = restInvoker.getAllDrivers();
+            return driverRepository.saveAll(findListDrivers);
+        }
+
+        return findListDrivers;
+    }
 
 }
 

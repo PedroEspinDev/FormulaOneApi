@@ -29,6 +29,12 @@ public class DriverController {
 
         return ResponseEntity.ok(driverService.getDrivers(name));
     }
+    @GetMapping("/allDrivers")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<Driver>> getAllDriversInfo() {
+
+        return ResponseEntity.ok(driverService.getAllDrivers());
+    }
 }
 
 
