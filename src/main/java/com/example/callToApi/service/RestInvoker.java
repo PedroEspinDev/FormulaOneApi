@@ -28,26 +28,7 @@ public class RestInvoker {
         HttpEntity<Driver> entity = new HttpEntity<>(headers);
 
         ResponseEntity<Response> response = restTemplate.exchange(
-                F1_API_URL+name,
-                HttpMethod.GET,
-                entity,
-                Response.class
-        );
-
-        if (response.getBody() == null) {
-            return new ArrayList<>();
-        }
-        return response.getBody().getResponse();
-    }
-    public List<Driver> getAllDrivers() {
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("X-RapidAPI-Key", "128e724cec996bb93f87c571eb590f62");
-        headers.add("X-RapidAPI-Host", "api-formula-1.p.rapidapi.com");
-
-        HttpEntity<Driver> entity = new HttpEntity<>(headers);
-
-        ResponseEntity<Response> response = restTemplate.exchange(
-                F1_API_URL,
+                F1_API_URL + name,
                 HttpMethod.GET,
                 entity,
                 Response.class

@@ -9,6 +9,6 @@ import org.springframework.stereotype.*;
 import java.util.List;
 
 @Repository
-public interface IDriverRepository extends JpaRepository<Driver,Long> {
-    List<Driver> findByNameContaining(String name);
+public interface IDriverRepository extends JpaRepository<Driver, Long> {
+    List<Driver> findByNameContainingIgnoreCase(String name);
 }

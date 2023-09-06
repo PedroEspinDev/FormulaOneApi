@@ -23,21 +23,16 @@ public class DriverService {
     private final RestInvoker restInvoker;
 
     public List<Driver> getDrivers(String name) {
-        List<Driver> matchingDrivers = driverRepository.findByNameContaining(name);
+        List<Driver> matchingDrivers = driverRepository.findByNameContainingIgnoreCase(name);
         if (matchingDrivers.isEmpty()) {
             matchingDrivers = restInvoker.getDriver(name);
             return driverRepository.saveAll(matchingDrivers);
         }
         return matchingDrivers;
     }
-    public List<Driver> getAllDrivers() {
-        List<Driver> findListDrivers = driverRepository.findAll();
-        if (findListDrivers.isEmpty()) {
-            findListDrivers = restInvoker.getAllDrivers();
-            return driverRepository.saveAll(findListDrivers);
-        }
 
-        return findListDrivers;
+    public List<Driver> getAllDrivers() {
+        return driverRepository.findAll();
     }
 
 }

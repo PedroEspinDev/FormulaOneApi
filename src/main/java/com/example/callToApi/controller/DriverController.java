@@ -1,9 +1,7 @@
 package com.example.callToApi.controller;
 
 import com.example.callToApi.entity.Driver;
-import com.example.callToApi.repository.IDriverRepository;
 import com.example.callToApi.service.DriverService;
-import com.example.callToApi.service.RestInvoker;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +14,6 @@ import java.util.List;
 @RestController
 public class DriverController {
     private final DriverService driverService;
-    private final IDriverRepository driverRepository;
 
     /*
       1. Crear un endpoint que devuelva los pilotos de la base de datos buscados por nombre,
@@ -29,6 +26,7 @@ public class DriverController {
 
         return ResponseEntity.ok(driverService.getDrivers(name));
     }
+
     @GetMapping("/allDrivers")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Driver>> getAllDriversInfo() {
