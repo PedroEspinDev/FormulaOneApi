@@ -1,20 +1,13 @@
 package com.example.callToApi.service;
 
 import com.example.callToApi.entity.Driver;
+import com.example.callToApi.exceptions.DriverNotFoundException;
 import com.example.callToApi.repository.IDriverRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.data.repository.query.Param;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
@@ -22,19 +15,44 @@ public class DriverService {
     private final IDriverRepository driverRepository;
     private final RestInvoker restInvoker;
 
-    public List<Driver> getDrivers(String name) {
+    public List<Driver> getDriver(String name) {
         List<Driver> matchingDrivers = driverRepository.findByNameContainingIgnoreCase(name);
+
         if (matchingDrivers.isEmpty()) {
             matchingDrivers = restInvoker.getDriver(name);
+            if (matchingDrivers.isEmpty()) {
+                throw new DriverNotFoundException("Not found driver with name: " + name);
+            }
             return driverRepository.saveAll(matchingDrivers);
+        } else {
+            return matchingDrivers;
         }
-        return matchingDrivers;
     }
-
     public List<Driver> getAllDrivers() {
         return driverRepository.findAll();
     }
 
+    public Driver getDriverById(Long id) {
+        Optional<Driver> optionalDriver = driverRepository.findById(id);
+
+        return optionalDriver.orElseThrow(() -> new DriverNotFoundException("Not found Driver with id = " + id));
+    }
+
+    public void deleteDriverById(Long id) {
+        driverRepository.deleteById(id);
+    }
+
+    public Driver saveDriver(Driver driver) {
+        return driverRepository.save(driver);
+    }
+    public Driver updateDriver(Long id, Driver driver) {
+     Optional<Driver> driverOptional = driverRepository.findById(id);
+        if (!driverOptional.isPresent()) {
+            throw new DriverNotFoundException("Not found driver with ID: "+ id);
+        }
+
+        return driverRepository.save(driver);
+    }
 }
 
 

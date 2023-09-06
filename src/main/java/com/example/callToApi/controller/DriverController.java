@@ -1,6 +1,7 @@
 package com.example.callToApi.controller;
 
 import com.example.callToApi.entity.Driver;
+import com.example.callToApi.exceptions.DriverNotFoundException;
 import com.example.callToApi.service.DriverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -22,17 +24,43 @@ public class DriverController {
     */
     @GetMapping("/driver/{name}")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<Driver>> getDriversInfo(@PathVariable String name) {
-
-        return ResponseEntity.ok(driverService.getDrivers(name));
+    public ResponseEntity<List<Driver>> getDriversInfo(
+            @PathVariable String name) {
+        return ResponseEntity.ok(driverService.getDriver(name));
     }
 
     @GetMapping("/allDrivers")
-    @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Driver>> getAllDriversInfo() {
-
-        return ResponseEntity.ok(driverService.getAllDrivers());
+     Optional <List<Driver>> optionalDrivers = Optional.of(driverService.getAllDrivers());
+        return new ResponseEntity(optionalDrivers, HttpStatus.OK);
     }
+
+    @GetMapping("/driverById/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Optional> getDriverById(@PathVariable Long id) {
+        Driver optionalDriver = driverService.getDriverById(id);
+
+        return ResponseEntity.ok(Optional.of(optionalDriver));
+    }
+
+    @DeleteMapping("/deleteDriverById/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteDriverById(@PathVariable Long id) {
+        driverService.deleteDriverById(id);
+
+        return ResponseEntity.ok("Driver with id: " + id + " was deleted");
+    }
+    @PutMapping("/updateDriver/{id}")
+    public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver driver) {
+        Driver _driver = driverService.getDriverById(id);
+
+        _driver.setGrands_prix_entered(_driver.getGrands_prix_entered());
+        _driver.setPodiums(_driver.getPodiums());
+        _driver.setWorld_championships(_driver.getWorld_championships());
+
+        return new ResponseEntity<>(driverService.saveDriver(_driver), HttpStatus.OK);
+    }
+
 }
 
 
