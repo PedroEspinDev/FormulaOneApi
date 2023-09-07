@@ -17,7 +17,7 @@ public class DriverService {
     private final IDriverRepository driverRepository;
     private final RestInvoker restInvoker;
 
-    private final IDriverMapper driverMapper;
+    private IDriverMapper driverMapper;
 
     public List<Driver> getDriver(String name) {
         List<Driver> matchingDrivers = driverRepository.findByNameContainingIgnoreCase(name);
@@ -52,12 +52,13 @@ public class DriverService {
     }
 
     public Driver updateDriver(Long id, DriverDto driverDto) {
-        Driver driver = driverRepository.findById(id)
-                .orElseThrow(() -> new DriverNotFoundException("Not found Driver with ID: " + id));
+        Driver driver = driverRepository.findById(id).orElseThrow(() -> new DriverNotFoundException("Not found Driver with ID: " + id));
 
+        driver = IDriverMapper.entityToDto(driver);
         driver.setGrands_prix_entered(driverDto.getGrands_prix_entered());
         driver.setPodiums(driverDto.getPodiums());
         driver.setWorld_championships(driverDto.getWorld_championships());
+        driver = IDriverMapper.dtoToEntity(driverDto);
 
         return driverRepository.save(driver);
 

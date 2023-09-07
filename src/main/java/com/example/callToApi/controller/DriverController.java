@@ -1,5 +1,6 @@
 package com.example.callToApi.controller;
 
+import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
 import com.example.callToApi.exceptions.DriverNotFoundException;
 import com.example.callToApi.service.DriverService;
@@ -51,8 +52,9 @@ public class DriverController {
         return ResponseEntity.ok("Driver with id: " + id + " was deleted");
     }
     @PutMapping("/updateDriver/{id}")
-    public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver driver) {
+    public ResponseEntity<Driver> updateDriverById(@PathVariable Long id, @RequestBody DriverDto driverDto) {
         Driver _driver = driverService.getDriverById(id);
+        driverService.updateDriver(id, driverDto);
 
         return new ResponseEntity<>(driverService.saveDriver(_driver), HttpStatus.OK);
     }
