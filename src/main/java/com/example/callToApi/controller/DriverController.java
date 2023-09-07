@@ -54,10 +54,6 @@ public class DriverController {
     public ResponseEntity<Driver> updateDriver(@PathVariable Long id, @RequestBody Driver driver) {
         Driver _driver = driverService.getDriverById(id);
 
-        _driver.setGrands_prix_entered(_driver.getGrands_prix_entered());
-        _driver.setPodiums(_driver.getPodiums());
-        _driver.setWorld_championships(_driver.getWorld_championships());
-
         return new ResponseEntity<>(driverService.saveDriver(_driver), HttpStatus.OK);
     }
 

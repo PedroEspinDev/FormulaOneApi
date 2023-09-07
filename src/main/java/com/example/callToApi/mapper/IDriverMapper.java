@@ -3,20 +3,25 @@ package com.example.callToApi.mapper;
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
 import org.mapstruct.Mapper;
-import org.mapstruct.factory.Mappers;
 
-import java.util.List;
-
-
+@Mapper(componentModel = "spring")
 public interface IDriverMapper {
-/*
-    Driver toDto(Driver entity);
 
-    Driver toEntity(DriverDto dto);
+    public static DriverDto entityToDto(Driver driver) {
+        DriverDto driverDto = new DriverDto();
 
-    List<Driver> toEntityList(List<DriverDto> dto);
+        driverDto.setGrands_prix_entered(driver.getGrands_prix_entered());
+        driverDto.setPodiums(driver.getPodiums());
+        driverDto.setWorld_championships(driver.getWorld_championships());
+        return driverDto;
+    }
 
-    IDriverMapper INSTANCE = Mappers.getMapper(IDriverMapper.class);
+    public static Driver dtoToEntity(DriverDto driverDto) {
+        Driver driver = new Driver();
 
- */
+        driver.setGrands_prix_entered(driverDto.getGrands_prix_entered());
+        driver.setPodiums(driverDto.getPodiums());
+        driver.setWorld_championships(driverDto.getWorld_championships());
+        return driver;
+    }
 }
