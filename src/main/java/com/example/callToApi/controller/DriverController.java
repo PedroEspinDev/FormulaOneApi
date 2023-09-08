@@ -18,11 +18,6 @@ import java.util.Optional;
 public class DriverController {
     private final DriverService driverService;
 
-    /*
-      1. Crear un endpoint que devuelva los pilotos de la base de datos buscados por nombre,
-        en caso de no encontrarlos por estar vacía, buscará en la API externa
-        y los guardará en nuestra la base de datos.
-    */
     @GetMapping("/driver/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Driver>> getDriversInfo(
@@ -32,7 +27,7 @@ public class DriverController {
 
     @GetMapping("/allDrivers")
     public ResponseEntity<List<Driver>> getAllDriversInfo() {
-     Optional <List<Driver>> optionalDrivers = Optional.of(driverService.getAllDrivers());
+        Optional<List<Driver>> optionalDrivers = Optional.of(driverService.getAllDrivers());
         return new ResponseEntity(optionalDrivers, HttpStatus.OK);
     }
 
@@ -51,14 +46,18 @@ public class DriverController {
 
         return ResponseEntity.ok("Driver with id: " + id + " was deleted");
     }
+
     @PutMapping("/updateDriver/{id}")
-    public ResponseEntity<Driver> updateDriverById(@PathVariable Long id, @RequestBody DriverDto driverDto) {
-        Driver _driver = driverService.getDriverById(id);
+    @ResponseStatus(HttpStatus.OK)
+    public void updateDriverById(@PathVariable Long id, @RequestBody DriverDto driverDto) {
         driverService.updateDriver(id, driverDto);
 
-        return new ResponseEntity<>(driverService.saveDriver(_driver), HttpStatus.OK);
     }
 
+    @ExceptionHandler(DriverNotFoundException.class)
+    public ResponseEntity<String> handleException(DriverNotFoundException e) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
 }
 
 

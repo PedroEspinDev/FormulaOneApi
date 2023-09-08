@@ -3,7 +3,7 @@ package com.example.callToApi.service;
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
 import com.example.callToApi.exceptions.DriverNotFoundException;
-import com.example.callToApi.mapper.IDriverMapper;
+import com.example.callToApi.factory.DriverFactory;
 import com.example.callToApi.repository.IDriverRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -16,8 +16,7 @@ import java.util.Optional;
 public class DriverService {
     private final IDriverRepository driverRepository;
     private final RestInvoker restInvoker;
-
-    private IDriverMapper driverMapper;
+    private final DriverFactory driverFactory;
 
     public List<Driver> getDriver(String name) {
         List<Driver> matchingDrivers = driverRepository.findByNameContainingIgnoreCase(name);
@@ -51,16 +50,11 @@ public class DriverService {
         return driverRepository.save(driver);
     }
 
-    public Driver updateDriver(Long id, DriverDto driverDto) {
-        Driver driver = driverRepository.findById(id).orElseThrow(() -> new DriverNotFoundException("Not found Driver with ID: " + id));
+    public void updateDriver(Long id, DriverDto driverDto) {
+        Driver driver = driverRepository.findById(id)
+                .orElseThrow(() -> new DriverNotFoundException("Not found Driver with ID: " + id));
 
-        driver = IDriverMapper.entityToDto(driver);
-        driver.setGrands_prix_entered(driverDto.getGrands_prix_entered());
-        driver.setPodiums(driverDto.getPodiums());
-        driver.setWorld_championships(driverDto.getWorld_championships());
-        driver = IDriverMapper.dtoToEntity(driverDto);
-
-        return driverRepository.save(driver);
+        driverRepository.save(driverFactory.create(driver, driverDto));
 
     }
 
