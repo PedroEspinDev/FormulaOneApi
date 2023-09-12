@@ -1,4 +1,4 @@
-package com.example.callToApi.service;
+package com.example.callToApi.externalApi;
 
 import com.example.callToApi.entity.Driver;
 import com.example.callToApi.entity.Response;

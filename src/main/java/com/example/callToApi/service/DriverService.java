@@ -2,6 +2,7 @@ package com.example.callToApi.service;
 
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
+import com.example.callToApi.externalApi.RestInvoker;
 import com.example.callToApi.exceptions.DriverNotFoundException;
 import com.example.callToApi.factory.DriverFactory;
 import com.example.callToApi.repository.IDriverRepository;
@@ -44,10 +45,6 @@ public class DriverService {
 
     public void deleteDriverById(Long id) {
         driverRepository.deleteById(id);
-    }
-
-    public Driver saveDriver(Driver driver) {
-        return driverRepository.save(driver);
     }
 
     public void updateDriver(Long id, DriverDto driverDto) {
