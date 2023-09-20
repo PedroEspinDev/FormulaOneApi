@@ -2,7 +2,7 @@ package com.example.callToApi.controller;
 
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
-import com.example.callToApi.exceptions.DriverNotFoundException;
+import com.example.callToApi.exceptions.EntityNotFoundException;
 import com.example.callToApi.service.DriverService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -54,8 +54,8 @@ public class DriverController {
 
     }
 
-    @ExceptionHandler(DriverNotFoundException.class)
-    public ResponseEntity<String> handleException(DriverNotFoundException e) {
+    @ExceptionHandler(EntityNotFoundException.class)
+    public ResponseEntity<String> handleException(EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
 }

@@ -1,7 +1,6 @@
 package com.example.callToApi.externalApi;
 
 import com.example.callToApi.entity.Driver;
-import com.example.callToApi.entity.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,28 +14,28 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class RestInvoker {
+public class DriverRestInvoker {
 
     private final RestTemplate restTemplate;
     private static final String F1_API_URL = "https://v1.formula-1.api-sports.io/drivers?search=";
 
     public List<Driver> getDriver(String name) {
         HttpHeaders headers = new HttpHeaders();
-        headers.add("X-RapidAPI-Key", "128e724cec996bb93f87c571eb590f62");
+        headers.add("X-RapidAPI-Key", "8010659d3db4840e870bc96299d1341d");
         headers.add("X-RapidAPI-Host", "api-formula-1.p.rapidapi.com");
 
         HttpEntity<Driver> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<Response> response = restTemplate.exchange(
+        ResponseEntity<Response> d_response = restTemplate.exchange(
                 F1_API_URL + name,
                 HttpMethod.GET,
                 entity,
                 Response.class
         );
 
-        if (response.getBody() == null) {
+        if (d_response.getBody() == null) {
             return new ArrayList<>();
         }
-        return response.getBody().getResponse();
+        return d_response.getBody().getDriverResponse();
     }
 }

@@ -2,8 +2,8 @@ package com.example.callToApi.service;
 
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
-import com.example.callToApi.externalApi.RestInvoker;
-import com.example.callToApi.exceptions.DriverNotFoundException;
+import com.example.callToApi.exceptions.EntityNotFoundException;
+import com.example.callToApi.externalApi.DriverRestInvoker;
 import com.example.callToApi.factory.DriverFactory;
 import com.example.callToApi.repository.IDriverRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 public class DriverService {
     private final IDriverRepository driverRepository;
-    private final RestInvoker restInvoker;
+    private final DriverRestInvoker restInvoker;
     private final DriverFactory driverFactory;
 
     public List<Driver> getDriver(String name) {
@@ -25,7 +25,7 @@ public class DriverService {
         if (matchingDrivers.isEmpty()) {
             matchingDrivers = restInvoker.getDriver(name);
             if (matchingDrivers.isEmpty()) {
-                throw new DriverNotFoundException("Not found driver with name: " + name);
+                throw new EntityNotFoundException("Not found driver with name: " + name);
             }
             return driverRepository.saveAll(matchingDrivers);
         } else {
@@ -40,7 +40,7 @@ public class DriverService {
     public Driver getDriverById(Long id) {
         Optional<Driver> optionalDriver = driverRepository.findById(id);
 
-        return optionalDriver.orElseThrow(() -> new DriverNotFoundException("Not found Driver with id = " + id));
+        return optionalDriver.orElseThrow(() -> new EntityNotFoundException("Not found Driver with id = " + id));
     }
 
     public void deleteDriverById(Long id) {
@@ -49,7 +49,7 @@ public class DriverService {
 
     public void updateDriver(Long id, DriverDto driverDto) {
         Driver driver = driverRepository.findById(id)
-                .orElseThrow(() -> new DriverNotFoundException("Not found Driver with ID: " + id));
+                .orElseThrow(() -> new EntityNotFoundException("Not found Driver with ID: " + id));
 
         driverRepository.save(driverFactory.create(driver, driverDto));
 

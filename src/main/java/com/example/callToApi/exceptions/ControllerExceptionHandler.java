@@ -11,9 +11,9 @@ import java.util.Date;
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
-    @ExceptionHandler(DriverNotFoundException.class)
+    @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<ErrorMessage> resourceNotFoundException(
-            DriverNotFoundException ex, WebRequest request) {
+            EntityNotFoundException ex, WebRequest request) {
 
         ErrorMessage message = new ErrorMessage(
                 HttpStatus.NOT_FOUND.value(),

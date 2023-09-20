@@ -1,10 +1,10 @@
 package com.example.callToApi.exceptions;
 
-public class DriverNotFoundException extends RuntimeException {
+public class EntityNotFoundException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
-    public DriverNotFoundException(String msg) {
+    public EntityNotFoundException(String msg) {
         super(msg);
     }
 }
