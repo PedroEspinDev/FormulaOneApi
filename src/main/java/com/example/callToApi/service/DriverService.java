@@ -3,7 +3,7 @@ package com.example.callToApi.service;
 import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
 import com.example.callToApi.exceptions.EntityNotFoundException;
-import com.example.callToApi.externalApi.DriverRestInvoker;
+import com.example.callToApi.externalApi.formula.invoker.DriverRestInvoker;
 import com.example.callToApi.factory.DriverFactory;
 import com.example.callToApi.repository.IDriverRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,14 +16,14 @@ import java.util.Optional;
 @Service
 public class DriverService {
     private final IDriverRepository driverRepository;
-    private final DriverRestInvoker restInvoker;
+    private final DriverRestInvoker driverRestInvoker;
     private final DriverFactory driverFactory;
 
     public List<Driver> getDriver(String name) {
         List<Driver> matchingDrivers = driverRepository.findByNameContainingIgnoreCase(name);
 
         if (matchingDrivers.isEmpty()) {
-            matchingDrivers = restInvoker.getDriver(name);
+            matchingDrivers = driverRestInvoker.getDrivers(name);
             if (matchingDrivers.isEmpty()) {
                 throw new EntityNotFoundException("Not found driver with name: " + name);
             }

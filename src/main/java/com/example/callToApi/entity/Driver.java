@@ -12,6 +12,7 @@ import javax.persistence.*;
 @Getter
 @Setter
 @Entity
+@Table(name = "driver")
 public class Driver {
     @Id
     private Long id;

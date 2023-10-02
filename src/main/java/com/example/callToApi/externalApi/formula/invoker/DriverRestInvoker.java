@@ -1,7 +1,7 @@
-package com.example.callToApi.externalApi;
+package com.example.callToApi.externalApi.formula.invoker;
 
 import com.example.callToApi.entity.Driver;
-import com.example.callToApi.entity.Team;
+import com.example.callToApi.externalApi.formula.response.DriverResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -15,28 +15,28 @@ import java.util.List;
 
 @RequiredArgsConstructor
 @Service
-public class TeamRestInvoker {
+public class DriverRestInvoker {
 
     private final RestTemplate restTemplate;
-    private static final String F1_API_URL = "https://v1.formula-1.api-sports.io/teams?search=";
+    private static final String F1_API_URL = "https://v1.formula-1.api-sports.io/drivers?search=";
 
-    public List<Team> getTeam(String name) {
+    public List<Driver> getDrivers(String name) {
         HttpHeaders headers = new HttpHeaders();
         headers.add("X-RapidAPI-Key", "8010659d3db4840e870bc96299d1341d");
         headers.add("X-RapidAPI-Host", "api-formula-1.p.rapidapi.com");
 
-        HttpEntity<Team> entity = new HttpEntity<>(headers);
+        HttpEntity<Driver> entity = new HttpEntity<>(headers);
 
-        ResponseEntity<Response> t_response = restTemplate.exchange(
+        ResponseEntity<DriverResponse> d_response = restTemplate.exchange(
                 F1_API_URL + name,
                 HttpMethod.GET,
                 entity,
-                Response.class
+                DriverResponse.class
         );
 
-        if (t_response.getBody() == null) {
+        if (d_response.getBody() == null) {
             return new ArrayList<>();
         }
-        return t_response.getBody().getTeamResponse();
+        return d_response.getBody().getResponse();
     }
 }

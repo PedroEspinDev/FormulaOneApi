@@ -1,4 +1,4 @@
-package com.example.callToApi.entity;
+package com.example.callToApi.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -10,7 +10,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
@@ -18,17 +17,14 @@ import javax.persistence.Table;
 @Setter
 @Entity
 @Table(name = "team")
-public class Team {
+public class TeamDto {
     @Id
     private Long id;
-    private String name;
     private String base;
     private String president;
     private String director;
     private String technical_manager;
     private Integer world_championships;
-    private Integer first_team_entry;
     private String engine;
     private String chassis;
 }
-
