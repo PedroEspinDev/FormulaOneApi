@@ -6,9 +6,8 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -30,5 +29,7 @@ public class Team {
     private Integer first_team_entry;
     private String engine;
     private String chassis;
-}
 
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private List<Driver> driver;
+}

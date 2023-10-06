@@ -1,6 +1,5 @@
 package com.example.callToApi.dto;
 
-import com.example.callToApi.entity.Driver;
 import lombok.*;
 import lombok.experimental.SuperBuilder;
 
@@ -9,7 +8,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class DriverDto extends Driver {
+public class DriverDto {
 
     private Integer grands_prix_entered;
     private Integer world_championships;

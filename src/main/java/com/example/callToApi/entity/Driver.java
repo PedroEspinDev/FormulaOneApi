@@ -4,6 +4,7 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @AllArgsConstructor
@@ -24,5 +25,9 @@ public class Driver {
     private Integer grands_prix_entered;
     private Integer world_championships;
     private Integer podiums;
+
+    @ManyToOne
+    private Team team;
+
 }
 
