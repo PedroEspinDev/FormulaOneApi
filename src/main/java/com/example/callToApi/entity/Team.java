@@ -31,5 +31,6 @@ public class Team {
     private String chassis;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "team_id")
     private List<Driver> driver;
 }

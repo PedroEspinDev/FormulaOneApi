@@ -28,6 +28,5 @@ public class Driver {
 
     @ManyToOne
     private Team team;
-
 }
 
