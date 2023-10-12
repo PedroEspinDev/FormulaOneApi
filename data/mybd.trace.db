@@ -3485,3 +3485,7 @@ The connection was not closed by the application and is garbage collected [90018
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:678)
 	at org.h2.message.DbException.getJdbcSQLException(DbException.java:477)
 	... 17 more
+2023-10-12 12:06:12 jdbc[13]: exception
+org.h2.jdbc.JdbcSQLSyntaxErrorException: Error de Sintaxis en sentencia SQL "[*]DRIVER_ID"; se esperaba "DELETE, DROP, DECLARE, DEALLOCATE"
+Syntax error in SQL statement "[*]DRIVER_ID"; expected "DELETE, DROP, DECLARE, DEALLOCATE"; SQL statement:
+DRIVER_ID [42001-214]

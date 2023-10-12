@@ -55,6 +55,9 @@ public class DriverService {
 
     }
 
+    public void saveDrive(Driver drive) {
+        driverRepository.save(drive);
+    }
 }
 
 

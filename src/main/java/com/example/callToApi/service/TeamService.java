@@ -51,4 +51,8 @@ public class TeamService {
                 .orElseThrow(() -> new EntityNotFoundException("Not found Team with ID: " + id));
         teamRepository.save(teamFactory.create(team, teamDto));
     }
+
+    public void saveTeam(Team team) {
+        teamRepository.save(team);
+    }
 }

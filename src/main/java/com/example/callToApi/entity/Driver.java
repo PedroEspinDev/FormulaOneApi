@@ -25,8 +25,8 @@ public class Driver {
     private Integer grands_prix_entered;
     private Integer world_championships;
     private Integer podiums;
+    private Long id_team;
 
-    @ManyToOne
-    private Team team;
+
 }
 

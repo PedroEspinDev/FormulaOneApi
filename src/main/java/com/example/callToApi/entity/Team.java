@@ -7,7 +7,7 @@ import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 
 @AllArgsConstructor
@@ -31,6 +31,5 @@ public class Team {
     private String chassis;
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinColumn(name = "team_id")
-    private List<Driver> driver;
+    private Set<Driver> driver;
 }
