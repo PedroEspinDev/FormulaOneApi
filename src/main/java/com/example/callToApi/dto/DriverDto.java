@@ -1,18 +1,23 @@
 package com.example.callToApi.dto;
 
-import com.example.callToApi.entity.Driver;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 @Getter
 @Setter
+<<<<<<< HEAD
 
 public class DriverDto extends Driver {
+=======
+@SuperBuilder
+@AllArgsConstructor
+@NoArgsConstructor
+public class DriverDto {
+>>>>>>> relations
 
-    private Integer id;
-    private String name;
-    private Integer age;
-    private String nacionality;
+    private Integer grands_prix_entered;
+    private Integer world_championships;
+    private Integer podiums;
 
 }
 

@@ -1,42 +1,46 @@
 package com.example.callToApi.service;
 
+import com.example.callToApi.dto.DriverDto;
 import com.example.callToApi.entity.Driver;
+import com.example.callToApi.exceptions.EntityNotFoundException;
+import com.example.callToApi.externalApi.formula.invoker.DriverRestInvoker;
+import com.example.callToApi.factory.DriverFactory;
 import com.example.callToApi.repository.IDriverRepository;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.HttpEntity;
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestTemplate;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
+import java.util.Optional;
 
 @RequiredArgsConstructor
 @Service
 public class DriverService {
-
-    //Declaramos el repositorio y el restTemplate
     private final IDriverRepository driverRepository;
-    @Autowired
-    private final RestTemplate restTemplate;
+    private final DriverRestInvoker driverRestInvoker;
+    private final DriverFactory driverFactory;
 
-    //Declaramos la URL de la API externa con el marcador de posición para el nombre del piloto
-    private static final String F1_API_URL = "https://v1.formula-1.api-sports.io/{driver}";
+    public List<Driver> getDriver(String name) {
+        List<Driver> matchingDrivers = driverRepository.findByNameContainingIgnoreCase(name);
 
-    //Declaramos el método que nos devolverá la lista de pilotos
+        if (matchingDrivers.isEmpty()) {
+            matchingDrivers = driverRestInvoker.getDrivers(name);
+            if (matchingDrivers.isEmpty()) {
+                throw new EntityNotFoundException("Not found driver with name: " + name);
+            }
+            return driverRepository.saveAll(matchingDrivers);
+        } else {
+            return matchingDrivers;
+        }
+    }
 
-    public List<Driver> getAndSaveDrivers() {
-        //Declaramos los headers para configurar los encabezados HTTP,
-        //son utilizados por la API externa para indentificar el host y atentificación.
+    public List<Driver> getAllDrivers() {
+        return driverRepository.findAll();
+    }
 
-        HttpHeaders headers = new HttpHeaders();
-        headers.add("x-rapidapi-key", "8010659d3db4840e870bc96299d1341d");
-        headers.add("x-rapidapi-host", "v1.formula-1.api-sports.io");
+    public Driver getDriverById(Long id) {
+        Optional<Driver> optionalDriver = driverRepository.findById(id);
 
+<<<<<<< HEAD
         //Objeto que nos permite construir la URL con los parámetros que necesitamos
         HttpEntity<?> entity = new HttpEntity<>(headers);
         /*
@@ -54,12 +58,27 @@ public class DriverService {
                 new ParameterizedTypeReference<List<Driver>>() {
                 }
         );
+=======
+        return optionalDriver.orElseThrow(() -> new EntityNotFoundException("Not found Driver with id = " + id));
+    }
 
-        List<Driver> drivers = response.getBody();
-        driverRepository.saveAll(drivers);
+    public void deleteDriverById(Long id) {
+        driverRepository.deleteById(id);
+    }
+>>>>>>> relations
 
-        return drivers;
+    public void updateDriver(Long id, DriverDto driverDto) {
+        Driver driver = driverRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Not found Driver with ID: " + id));
+
+        driverRepository.save(driverFactory.create(driver, driverDto));
+
+    }
+
+    public void saveDrive(Driver drive) {
+        driverRepository.save(drive);
     }
 }
+
 
 

@@ -1,25 +1,32 @@
 package com.example.callToApi.entity;
 
 import lombok.*;
+import lombok.experimental.SuperBuilder;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Builder
+@SuperBuilder
 @Getter
 @Setter
-@Table(name = "driver")
 @Entity
+@Table(name = "driver")
 public class Driver {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer id;
-
+    private Long id;
     private String name;
-    private Integer age;
-    private String nacionality;
+    private String abbr;
+    private String nationality;
+    private String birthdate;
+    private String birthplace;
+    private Integer grands_prix_entered;
+    private Integer world_championships;
+    private Integer podiums;
+    private Long id_team;
+
 
 }
 

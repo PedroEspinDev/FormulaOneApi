@@ -4,6 +4,9 @@ import com.example.callToApi.entity.Driver;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.*;
 
+import java.util.List;
+
 @Repository
-public interface IDriverRepository extends JpaRepository<Driver, Integer> {
+public interface IDriverRepository extends JpaRepository<Driver, Long> {
+    List<Driver> findByNameContainingIgnoreCase(String name);
 }
