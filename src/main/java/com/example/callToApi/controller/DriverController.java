@@ -19,7 +19,6 @@ import java.util.Optional;
 public class DriverController {
     private final DriverService driverService;
 
-<<<<<<< HEAD
     @Autowired
     private DriverService driverService;
     @Autowired
@@ -34,7 +33,7 @@ public class DriverController {
         List<Driver> drivers = driverService.getAndSaveDrivers();
 
         return ResponseEntity.ok("Drivers saved");
-=======
+        
     @GetMapping("/driver/{name}")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<Driver>> getDriversInfo(
@@ -74,7 +73,6 @@ public class DriverController {
     @ExceptionHandler(EntityNotFoundException.class)
     public ResponseEntity<String> handleException(EntityNotFoundException e) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
->>>>>>> relations
     }
 }
 
