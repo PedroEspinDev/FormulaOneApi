@@ -40,7 +40,7 @@ public class DriverService {
     public Driver getDriverById(Long id) {
         Optional<Driver> optionalDriver = driverRepository.findById(id);
 
-<<<<<<< HEAD
+
         //Objeto que nos permite construir la URL con los parámetros que necesitamos
         HttpEntity<?> entity = new HttpEntity<>(headers);
         /*
@@ -58,14 +58,14 @@ public class DriverService {
                 new ParameterizedTypeReference<List<Driver>>() {
                 }
         );
-=======
+
         return optionalDriver.orElseThrow(() -> new EntityNotFoundException("Not found Driver with id = " + id));
     }
 
     public void deleteDriverById(Long id) {
         driverRepository.deleteById(id);
     }
->>>>>>> relations
+
 
     public void updateDriver(Long id, DriverDto driverDto) {
         Driver driver = driverRepository.findById(id)
