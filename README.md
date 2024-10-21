@@ -1,7 +1,3 @@
-<p align="center">
-  <img width="250px" src="https://www.ibm.com/content/dam/adobe-cms/instana/media_logo/Spring.component.complex-narrative-xl.ts=1690565625203.png/content/adobe-cms/es/es/products/instana/supported-technologies/spring-boot-performance-monitoring/_jcr_content/root/table_of_contents/body/content_section_styled/content-section-body/complex_narrative/logoimage" align="center" alt=" " />
-</p>
-
 
 <h1 align="center">Extración de datos desde APIRest externa </h1>
 <h1 align="center">External APIRest F1</h1>
